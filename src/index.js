@@ -3,7 +3,7 @@ import { fetchCountries } from './api/fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 
-fetchCountries('pe')
+fetchCountries('peru')
   .then(data => {
     console.log(data);
   })
