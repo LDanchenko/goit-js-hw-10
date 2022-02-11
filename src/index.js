@@ -1,9 +1,11 @@
-import './css/styles.css';
+import './sass/main.scss';
 import { fetchCountries } from './js/api/fetchCountries';
 import debounce from 'lodash.debounce';
+import countryListItems from './js/components/countrylist.hbs';
 
 const DEBOUNCE_DELAY = 300;
 const input = document.querySelector('#search-box');
+const countryList = document.querySelector('.country-list');
 
 input.addEventListener(
   'input',
@@ -18,5 +20,7 @@ input.addEventListener(
           console.log(error);
         });
     }
-  }, 300),
+  }, DEBOUNCE_DELAY),
 );
+const moviesList = ['Yehuda Katz', 'Alan Johnson', 'Charles Jolley'];
+countryList.innerHTML = countryListItems(moviesList);
