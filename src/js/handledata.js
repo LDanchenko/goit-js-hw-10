@@ -1,5 +1,5 @@
 export function handleCountryData(data) {
-  const countriesListItems = data.map(country => {
+  return data.map(country => {
     const {
       flags: { svg },
       name: { official: officialName },
@@ -16,5 +16,4 @@ export function handleCountryData(data) {
       languages,
     };
   });
-  return countriesListItems;
 }
