@@ -1,11 +1,9 @@
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-
 import './sass/main.scss';
 import { fetchCountries } from './js/api/fetchCountries';
 import countryListItems from './js/components/countrylist.hbs';
 import countryInfoItem from './js/components/countryinfo.hbs';
-
 import { handleCountryData } from './js/handledata';
 
 const DEBOUNCE_DELAY = 300;
