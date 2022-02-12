@@ -1,5 +1,6 @@
-<ul class="country-list">
   {{#each this}}
-    <li>{{this}}</li>
+    <li>
+       <img src='{{this.svg}}' alt='{{this.officialName}}' class='country-list__image'  />
+  <p class='country-list__name'>{{this.officialName}}</p>
+    </li>
   {{/each}}
-</ul>

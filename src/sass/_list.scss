@@ -1,0 +1,11 @@
+.country-list {
+  &__image {
+    width: 25px;
+    height: 15px;
+  }
+
+  &__name {
+    display: inline-block;
+    font-size: 18px;
+  }
+}

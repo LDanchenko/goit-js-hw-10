@@ -1,26 +1,61 @@
+import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 import './sass/main.scss';
 import { fetchCountries } from './js/api/fetchCountries';
-import debounce from 'lodash.debounce';
 import countryListItems from './js/components/countrylist.hbs';
+import countryInfoItem from './js/components/countryinfo.hbs';
+
+import { handleCountryData } from './js/handledata';
 
 const DEBOUNCE_DELAY = 300;
 const input = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
+const countryInfo = document.querySelector('.country-info');
 
 input.addEventListener(
   'input',
   debounce(event => {
+    renderMarkup(countryList, '');
+    renderMarkup(countryInfo, '');
     const inputText = event.target.value.trim();
     if (inputText) {
       fetchCountries(inputText)
         .then(data => {
-          console.log(data);
+          handleApiData(data);
         })
         .catch(error => {
-          console.log(error);
+          handleError(error);
         });
     }
   }, DEBOUNCE_DELAY),
 );
-const moviesList = ['Yehuda Katz', 'Alan Johnson', 'Charles Jolley'];
-countryList.innerHTML = countryListItems(moviesList);
+
+function handleApiData(data) {
+  if (data.length > 10) {
+    Notify.info('Too many matches found. Please enter a more specific name.');
+    return;
+  }
+
+  if (data.length >= 2 && data.length <= 10) {
+    const countriesListItems = handleCountryData(data);
+    renderMarkup(countryList, countryListItems(countriesListItems));
+  }
+
+  if (data.length === 1) {
+    const countryData = handleCountryData(data);
+    renderMarkup(countryInfo, countryInfoItem(countryData[0]));
+  }
+}
+
+function renderMarkup(el, markup) {
+  el.innerHTML = markup;
+}
+
+function handleError(error) {
+  if (error === 404) {
+    Notify.failure('Oops, there is no country with that name');
+  } else {
+    Notify.failure('Oops, an error occurred. Please try again later');
+  }
+}
