@@ -16,16 +16,7 @@ input.addEventListener(
   debounce(event => {
     renderMarkup(countryList, '');
     renderMarkup(countryInfo, '');
-    const inputText = event.target.value.trim();
-    if (inputText) {
-      fetchCountries(inputText)
-        .then(data => {
-          handleApiData(data);
-        })
-        .catch(error => {
-          handleError(error);
-        });
-    }
+    getApiData(event);
   }, DEBOUNCE_DELAY),
 );
 
@@ -55,5 +46,18 @@ function handleError(error) {
     Notify.failure('Oops, there is no country with that name');
   } else {
     Notify.failure('Oops, an error occurred. Please try again later');
+  }
+}
+
+function getApiData(event) {
+  const inputText = event.target.value.trim();
+  if (inputText) {
+    fetchCountries(inputText)
+      .then(data => {
+        handleApiData(data);
+      })
+      .catch(error => {
+        handleError(error);
+      });
   }
 }
